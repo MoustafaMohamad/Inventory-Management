@@ -12,6 +12,8 @@
         UserNameAlreadyExist,
         WrongPasswordOrEmail,
         UnableTogenerateToken,
-        RoleNotFound
+        RoleNotFound,
+        OtpIsNotValid,
+        OtpIsNotFound
     }
 }

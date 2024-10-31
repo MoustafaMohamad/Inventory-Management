@@ -9,7 +9,7 @@ namespace Inventory_Management.Features.Users.RegisterUser
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class RegisterUserEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,7 +18,7 @@ namespace Inventory_Management.Features.Users.RegisterUser
         {
             _mediator = mediator;
         }
-        [HttpPost]
+        [HttpPost("Register-user")]
         public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserEndPointRequest request)
         {
             var result = await _mediator.Send(request.MapOne<RegisterUserCommand>());

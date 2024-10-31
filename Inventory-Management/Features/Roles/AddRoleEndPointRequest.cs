@@ -2,5 +2,6 @@
 {
     public class AddRoleEndPointRequest
     {
+        public string RoleName { get; set; }
     }
 }

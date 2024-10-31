@@ -3,6 +3,7 @@ using Inventory_Management.Common;
 using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers;
 using Inventory_Management.Entities;
+using Inventory_Management.Features.Roles.AddRole.Commands;
 using Inventory_Management.Features.Roles.GetRole.Queries;
 using Inventory_Management.Features.Users.RegisterUser.Queries;
 using MediatR;
@@ -38,13 +39,22 @@ namespace Inventory_Management.Features.Users.RegisterUser.Commands
             var user = request.MapOne<User>();
             user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
             //Add Role
-            var roleResult = await _mediator.Send(new GetRoleByNameQuery("Customer"));
-            var role = roleResult.Data;
-            // user.Role = Role.;
-            user.RoleID = role.ID;
-           await  _repository.AddAsync(user);
+            var roleResult = await _mediator.Send(new GetRoleByNameQuery("Store Manager"));
+            
+            if (!roleResult.IsSuccess)
+            {
+                var newRoleResult = await _mediator.Send(new AddRoleCommand("Store Manager"));
+                user.RoleID = newRoleResult.Data;
+            }
+            else
+            {
+                var role = roleResult.Data;
+                user.RoleID = role.ID;
+            }
+             
+           var newUser = await  _repository.AddAsync(user);
             await _repository.SaveChanges();
-            return ResultDto<int>.Sucess(user.ID, "User Added Successfully");
+            return ResultDto<int>.Sucess(newUser.ID, "User Added Successfully");
         }
     }
 }

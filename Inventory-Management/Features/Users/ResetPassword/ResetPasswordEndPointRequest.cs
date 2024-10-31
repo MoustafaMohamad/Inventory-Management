@@ -5,9 +5,9 @@ namespace Inventory_Management.Features.Users.ResetPassword
     public class ResetPasswordEndPointRequest
     {
         
-        public string newPassword { get; set; }
+        public string NewPassword { get; set; }
         public string ConfirmPassword { get; set; }
         public string Email { get; set; }
-        public string? OtpCode { get; set; }
+        public string Otp{ get; set; }
     }
 }

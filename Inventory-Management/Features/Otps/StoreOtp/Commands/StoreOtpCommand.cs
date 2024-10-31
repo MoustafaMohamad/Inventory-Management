@@ -3,7 +3,7 @@ using Inventory_Management.Common;
 using Inventory_Management.Entities;
 using MediatR;
 
-namespace Inventory_Management.Features.Otps.Commands
+namespace Inventory_Management.Features.Otps.StoreOtp.Commands
 {
     public record StoreOtpCommand(string Email, string Otp) : IRequest<ResultDto<bool>>;
 
@@ -21,6 +21,7 @@ namespace Inventory_Management.Features.Otps.Commands
                 ExpiryTime = DateTime.UtcNow.AddMinutes(15)
             };
             await _repository.AddAsync(otpVerification);
+            await _repository.SaveChanges();
             return ResultDto<bool>.Sucess(true);
         }
     }

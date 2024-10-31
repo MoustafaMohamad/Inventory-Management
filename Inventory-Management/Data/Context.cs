@@ -17,6 +17,7 @@ namespace Inventory_Management.Data
         DbSet<Role> Roles { get; set; } 
         DbSet<RoleFeature> RoleFeatures { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<OtpVerification> Otps { get; set; }
 
         public Context()
         {
@@ -26,7 +27,7 @@ namespace Inventory_Management.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
-            optionsBuilder.UseSqlServer("Server =DESKTOP-GBMV023\\MSSQLSERVER2022; Database = Inventory_Management_System; Trusted_Connection = True; TrustServerCertificate = True;")
+            optionsBuilder.UseSqlServer("Server=.;Database=Test22;Trusted_Connection=True;Encrypt=False;")
                 .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }

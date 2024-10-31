@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Users.ForgetPassword
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class ForgetPasswordEndPoint :ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,7 +18,7 @@ namespace Inventory_Management.Features.Users.ForgetPassword
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("Forget-password")]
         public async Task<IActionResult> ForgetPasswordAsync([FromBody] ForgetPasswordEndPointRequest request)
         {
             var result =await  _mediator.Send(request.MapOne<ForgetPasswordOrchestrator>());

@@ -2,7 +2,6 @@
 using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers;
 using Inventory_Management.Entities;
-using Inventory_Management.Features.Users.RegisterUser.Commands;
 using MediatR;
 
 namespace Inventory_Management.Features.Users.Loginuser.Commands
@@ -16,14 +15,14 @@ namespace Inventory_Management.Features.Users.Loginuser.Commands
         }
         public async override Task<ResultDto<string>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _repository.First(c => c.Email == request.Email);
+            var user = await _repository.FirstAsync(c => c.Email == request.Email);
 
             if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
                 return ResultDto<string>.Faliure(ErrorCode.WrongPasswordOrEmail, "Email or Password is incorrect");
             }
             user.LastLogin = DateTime.UtcNow;
-            await _repository.Update(user);
+             _repository.Update(user);
             await _repository.SaveChanges();
             var token = await TokenGenerator.GenerateToken(user);
             if (!token.IsSuccess)

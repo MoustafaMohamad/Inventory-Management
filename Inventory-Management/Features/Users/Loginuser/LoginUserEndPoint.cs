@@ -9,7 +9,7 @@ namespace Inventory_Management.Features.Users.Loginuser
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class LoginUserEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,7 +18,7 @@ namespace Inventory_Management.Features.Users.Loginuser
         {
             _mediator = mediator;
         }
-        [HttpPost]
+        [HttpPost("Login-user")]
         public async Task<ActionResult> LoginUserAsync([FromBody] LoginUserEndPointRequest request)
         {
             var result = await _mediator.Send(request.MapOne<LoginUserCommand>());

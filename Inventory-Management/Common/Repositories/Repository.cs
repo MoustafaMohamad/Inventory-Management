@@ -14,30 +14,32 @@ namespace Inventory_Management.Common.Repositories
             _context = context;
         }
         
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
            await _context.Set<T>().AddAsync(entity);
+            return entity;  
            
         }
 
-        public bool Any(Expression<Func<T, bool>> predicate)
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(T entity)
-        {
-            throw new NotImplementedException();
+            return await _context.Set<T>().Where(e => !e.IsDeleted).AnyAsync(predicate);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = GetByID(id);
+            Delete(entity);
+        }
+        public void Delete(T entity)
+        {
+            entity.IsDeleted = true;
+            Update(entity);
         }
 
-        public async Task< T> First(Expression<Func<T, bool>> predicate)
+        public async Task< T> FirstAsync(Expression<Func<T, bool>> predicate)
         {
-            return  await _context.Set<T>().FirstOrDefaultAsync(predicate);    
+            return  await _context.Set<T>().Where(e=>!e.IsDeleted).FirstOrDefaultAsync(predicate);    
             
         }
 
@@ -51,19 +53,18 @@ namespace Inventory_Management.Common.Repositories
             return _context.Set<T>().Where(e => !e.IsDeleted);
         }
 
-        public T GetById(int id)
+        public T GetByID(int id)
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().Where(e => !e.IsDeleted).FirstOrDefault(t => t.ID == id);
         }
-
         public async Task SaveChanges()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public async Task Update(T entity)
+        public  void Update(T entity)
         {
-             _context.Update(entity);
+              _context.Update(entity);
         }
 
     }

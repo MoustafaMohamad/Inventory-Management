@@ -18,7 +18,7 @@ namespace Inventory_Management.Features.Roles.GetRole.Queries
 
         public async override Task<ResultDto<Role>> Handle(GetRoleByNameQuery request, CancellationToken cancellationToken)
         {
-            var role = await _repository.First(u => u.Name == request.Name);
+            var role = await _repository.FirstAsync(u => u.Name == request.Name);
             if (role is null)
             {
                 return ResultDto<Role>.Faliure(ErrorCode.RoleNotFound, "Role is not Found");

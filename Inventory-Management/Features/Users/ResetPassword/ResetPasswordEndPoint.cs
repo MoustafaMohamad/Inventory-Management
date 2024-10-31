@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Users.ResetPassword
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class ResetPasswordEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -16,7 +16,7 @@ namespace Inventory_Management.Features.Users.ResetPassword
         {
             _mediator = mediator;
         }
-        [HttpPost]
+        [HttpPost("Reset-password")]
         public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordEndPointRequest request)
         {
             var result = await _mediator.Send(request.MapOne<ResetPasswordCommand>());

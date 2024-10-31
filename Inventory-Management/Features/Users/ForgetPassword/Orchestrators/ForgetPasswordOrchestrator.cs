@@ -1,15 +1,15 @@
-﻿using Inventory_Management.Common.Helpers;
+﻿using Common.Helpers;
 using Inventory_Management.Common;
+using Inventory_Management.Common.Helpers;
 using Inventory_Management.CQRS.Email.Command;
 using Inventory_Management.Entities;
 using Inventory_Management.Features.Common.Users.Queries;
-using Inventory_Management.Features.Otps.Commands;
+using Inventory_Management.Features.Otps.StoreOtp.Commands;
 using MediatR;
-using Common.Helpers;
 
 namespace Inventory_Management.Features.Users.ForgetPassword.Orchestrators
 {
-     public record ForgetPasswordOrchestrator(string Email) : IRequest<ResultDto<bool>>;
+    public record ForgetPasswordOrchestrator(string Email) : IRequest<ResultDto<bool>>;
     public class ForgetPasswordOrchestratorhandler : BaseRequestHandler<User, ForgetPasswordOrchestrator, ResultDto<bool>>
     {
 

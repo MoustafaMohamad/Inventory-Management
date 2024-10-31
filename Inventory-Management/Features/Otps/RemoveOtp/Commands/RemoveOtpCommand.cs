@@ -1,16 +1,13 @@
-﻿using FluentEmail.Core;
-using Inventory_Management.Common;
+﻿using Inventory_Management.Common;
 using Inventory_Management.Entities;
 using MediatR;
-using static System.Net.WebRequestMethods;
 
-namespace Inventory_Management.CQRS.OTP.Commands
+namespace Inventory_Management.Features.Otps.RemoveOtp.Commands
 {
-    
-        public record RemoveOtpCommand( OtpVerification otp) : IRequest<bool>;
+    public record RemoveOtpCommand(OtpVerification otp) : IRequest<bool>;
 
-        public class RemoveOtpCommandHandler : BaseRequestHandler<OtpVerification, RemoveOtpCommand, bool>
-        {
+    public class RemoveOtpCommandHandler : BaseRequestHandler<OtpVerification, RemoveOtpCommand, bool>
+    {
         public RemoveOtpCommandHandler(RequestParameters<OtpVerification> requestParameters) : base(requestParameters)
         {
         }
@@ -24,5 +21,4 @@ namespace Inventory_Management.CQRS.OTP.Commands
             return Task.FromResult(true);
         }
     }
-    
 }

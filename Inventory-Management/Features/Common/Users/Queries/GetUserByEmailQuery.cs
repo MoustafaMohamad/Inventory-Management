@@ -18,7 +18,7 @@ namespace Inventory_Management.Features.Common.Users.Queries
 
         public async override Task<ResultDto<UserDto>> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
-            var user = await _repository.First(u => u.Email == request.Email);
+            var user = await _repository.FirstAsync(u => u.Email == request.Email);
             if (user is null) 
             {
                 return ResultDto<UserDto>.Faliure(ErrorCode.EmailIsNotFound, "Email is not Found");

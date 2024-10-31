@@ -14,7 +14,7 @@ namespace Inventory_Management.Features.Users.RegisterUser.Queries
         }
         public async override Task<ResultDto<bool>> Handle(IsEmailExistQuery request, CancellationToken cancellationToken)
         {
-            var result = await Task.Run(() => _repository.Any(u => u.Email == request.email));
+            var result = await Task.Run(() => _repository.AnyAsync(u => u.Email == request.email));
             if (result)
             {
                 return ResultDto<bool>.Sucess(true);
